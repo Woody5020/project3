@@ -470,6 +470,9 @@ footer .inner .upper {
 	padding: 50px 0;
 	position: relative;
 }
+footer.mobile .inner .upper {
+	position: static;
+}
 footer .inner .upper .left {
 	display: flex;
 	justify-content: space-between;
