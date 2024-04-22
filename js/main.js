@@ -3,26 +3,34 @@ window.addEventListener("load",function(){
 		e.preventDefault();
 		swiper.slidePrev();
 	});
+
 	document.querySelector(".controller .next-btn").addEventListener("click",function(e){
 		e.preventDefault();
 		swiper.slideNext();
 	});
+
 	var swiper = new Swiper(".mySwiper", {
 		loop:true,
 		autoplay: 
-        {delay: 3000}
+			{delay: 3000}
 	});
+
 	let sectionList=[];
 	sectionList[0]=document.querySelector(".start");
-	let section=this.document.querySelectorAll("section");
-		for(let i=0; i<section.length; i++){
+	let section=document.querySelectorAll("section");
+
+	for(let i=0; i<section.length; i++){
 		sectionList.push(section[i]);
 	}
+
+	let footer=document.querySelector("footer");
+
 	let n=0; 
 	let moving=false;
 	let winh; 
 	let total=sectionList.length+1; 
 	let headerFix=document.querySelector(".header");
+
 	function initFn(){
 		for(let i=0; i<sectionList.length; i++){
 			if(i == 0){
@@ -30,74 +38,16 @@ window.addEventListener("load",function(){
 			}
 		}
 	}
+
 	initFn();
-	function categoryFn(){ 
-		moving=true; 
-		winh=window.innerHeight;
-		for(let i=0; i <sectionList.length; i++){ 
-			if(n < sectionList.length){
-				if(i <= n){ 
-					if(i == n){ 
-						for(j=0; j<sectionList.length; j++){
-							if(j == n){
-								sectionList[j].classList.add("active");
-							}
-							else{
-								sectionList[j].classList.remove("active");
-							}
-						}
 
-						gsap.to(sectionList[i], {top: 0, duration: 1, onComplete: function(){
-							moving=false;
-						}});
-					}
-				}
-
-				else{ 
-					gsap.to(sectionList[i], {top: winh, duration: 1});
-				}
-			}
-			else{ 
-				gsap.to(sectionList[sectionList.length-1], {top: -358, duration: 1, onComplete: function(){
-					moving=false;
-				}});
-			}
-		}
-
-		if(n !== 0){
-			headerFix.classList.add("fixed");
-		}
-		else{
-			headerFix.classList.remove("fixed");
-		}
-	}
-	document.addEventListener("wheel",function(e){
-		if(moving)return;
-		if(e.wheelDeltaY > 0){  
-			if(n >0){ 
-				n=n-1; 
-			}
-			else {
-				return;
-			}
-		}
-		else { 
-			if(n < total-1){ 
-				n=n+1;
-			}
-			else { 
-				return;
-			}
-		}
-		categoryFn();
-	});
 	let gnbList=document.querySelectorAll("#desktop > ul > li");
 	let header=document.querySelector(".header");
-	let wint;
-let tabs=document.querySelector('.tab_container a.tab');
-let mobile=document.getElementById("mobile");
+	let tabs=document.querySelector('.tab_container a.tab');
+	let mobile=document.getElementById("mobile");
+	let dim=document.querySelector(".dim");
 
-let dim=document.querySelector(".dim");
+	let wint;
 
 	tabs.addEventListener("click",function(e){
 		e.preventDefault();
@@ -114,6 +64,7 @@ let dim=document.querySelector(".dim");
 			document.body.classList.add("fixed"); 
 		}
 	});
+
 let mobileListItems=document.querySelectorAll("#mobile > ul > li");
 for(let i=0; i<mobileListItems.length; i++){ 
 	mobileListItems[i].addEventListener("click", function(e){ 
@@ -160,4 +111,78 @@ if(winw > 720){
 			headerFix.classList.remove("active");
 		});
 	}
-	});
+
+	if(isMobile){ // Mobile
+		document.body.classList.add("mobile");
+
+		footer.classList.add("mobile");
+
+		for(let i=0; i<sectionList.length; i++){
+			sectionList[i].classList.add("mobile");
+		}
+	}
+	else{ // Desktop
+		function categoryFn(){ 
+			moving=true; 
+			winh=window.innerHeight;
+			
+			for(let i=0; i <sectionList.length; i++){ 
+				if(n < sectionList.length){
+					if(i <= n){ 
+						if(i == n){ 
+							for(j=0; j<sectionList.length; j++){
+								if(j == n){
+									sectionList[j].classList.add("active");
+								}
+								else{
+									sectionList[j].classList.remove("active");
+								}
+							}
+
+							gsap.to(sectionList[i], {top: 0, duration: 1, onComplete: function(){
+								moving=false;
+							}});
+						}
+					}
+
+					else{ 
+						gsap.to(sectionList[i], {top: winh, duration: 1});
+					}
+				}
+				else{ 
+					gsap.to(sectionList[sectionList.length-1], {top: -358, duration: 1, onComplete: function(){
+						moving=false;
+					}});
+				}
+			}
+
+			if(n !== 0){
+				headerFix.classList.add("fixed");
+			}
+			else{
+				headerFix.classList.remove("fixed");
+			}
+		}
+
+		document.addEventListener("wheel",function(e){
+			if(moving)return;
+			if(e.wheelDeltaY > 0){  
+				if(n >0){ 
+					n=n-1; 
+				}
+				else {
+					return;
+				}
+			}
+			else { 
+				if(n < total-1){ 
+					n=n+1;
+				}
+				else { 
+					return;
+				}
+			}
+			categoryFn();
+		});
+	}
+});

@@ -26,6 +26,9 @@ body {
 	font-size: 1em;
 	color: #555;
 }
+body.mobile {
+	overflow-y: auto;
+}
 body.fixed {
 	overflow-y: hidden;
 }
@@ -361,6 +364,11 @@ section {
 	left: 0; 
 	top: 100vh;
 }
+
+section.mobile {
+	position: static;
+}
+
 section .inner {
 	width: 1240px;
 	box-sizing: border-box;
@@ -448,6 +456,9 @@ footer {
 	z-index: 10000;
 	bottom: -358px;
 	width: 100%;
+}
+footer.mobile {
+	position: static;
 }
 footer .inner {
 	margin: 0 auto;
